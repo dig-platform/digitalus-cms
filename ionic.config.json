@@ -1,0 +1,7 @@
+{
+  "name": "digitalus-cms-pwa",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
