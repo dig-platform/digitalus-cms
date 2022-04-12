@@ -12,7 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app/app.effects';
-import { ProfileEffects } from './store/profile/profile.effects';
+import { ProfileEffects } from './modules/profile/store/profile.effects';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {getFirestore, provideFirestore} from '@angular/fire/firestore';
 import {getAuth, provideAuth} from '@angular/fire/auth';
@@ -23,6 +23,18 @@ import {getStorage, provideStorage} from '@angular/fire/storage';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireFunctionsModule} from '@angular/fire/compat/functions';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
+import {ProfileModule} from './modules/profile/profile.module';
+import {firebase, firebaseui, FirebaseUIModule} from 'firebaseui-angular';
+
+const firebaseUiAuthConfig: firebaseui.auth.Config = {
+  signInFlow: 'redirect',
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  ],
+  tosUrl: '/docs/terms',
+  privacyPolicyUrl: '/docs/privacy',
+  credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,10 +52,11 @@ import { PERSISTENCE } from '@angular/fire/compat/auth';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireFunctionsModule,
+    FirebaseUIModule.forRoot(firebaseUiAuthConfig),
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AppEffects]),
-    EffectsModule.forFeature([ProfileEffects])
+    EffectsModule.forRoot(),
+    ProfileModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

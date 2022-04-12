@@ -6,17 +6,13 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../../../environments/environment';
-import * as fromProfile from '../../profile/profile.reducer';
 
 
-export interface State {
+// todo setup root app state
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface State {}
 
-  [fromProfile.profileFeatureKey]: fromProfile.State;
-}
-
-export const reducers: ActionReducerMap<State> = {
-  [fromProfile.profileFeatureKey]: fromProfile.reducer,
-};
+export const reducers: ActionReducerMap<State> = {};
 
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

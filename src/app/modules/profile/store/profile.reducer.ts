@@ -26,4 +26,5 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
   on(ProfileActions.setProfile, (state, {profile}) => ({...profile})),
+  on(ProfileActions.resetProfile, (state) => (undefined)),
 );

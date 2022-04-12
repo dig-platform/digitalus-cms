@@ -8,6 +8,9 @@ export const setProfile = createAction(
   '[Profile] Set Profile',
   props<{profile: State}>()
 );
+export const signOut = createAction(
+  '[Profile] SignOut'
+);
 export const resetProfile = createAction(
   '[Profile] Reset Profile'
 );
