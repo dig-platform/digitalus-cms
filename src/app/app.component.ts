@@ -11,6 +11,6 @@ export class AppComponent {
   constructor(
     private store: Store
   ) {
-    store.dispatch(ProfileActions.loadProfiles());
+    store.dispatch(ProfileActions.loadProfile());
   }
 }

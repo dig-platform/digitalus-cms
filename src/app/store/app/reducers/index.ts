@@ -15,7 +15,6 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
-
   [fromProfile.profileFeatureKey]: fromProfile.reducer,
 };
 

@@ -1,26 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { concatMap } from 'rxjs/operators';
-import { Observable, EMPTY } from 'rxjs';
+import {catchError, concatMap, map} from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
 
 import * as ProfileActions from './profile.actions';
+
+import {AngularFireAuth} from '@angular/fire/compat/auth';
 
 
 @Injectable()
 export class ProfileEffects {
+  loadProfile$ = createEffect(() => this.actions$.pipe(
+    ofType(ProfileActions.loadProfile),
+    concatMap(() => this.auth.authState
+      .pipe(
+        map(auth => {
+          if (auth) {
+            const {uid, displayName, photoURL, email, phoneNumber} = auth;
+            return ProfileActions.setProfile({profile: {uid, displayName, photoURL, email, phoneNumber}});
+          } else {
+            return ProfileActions.resetProfile;
+          }
+        }),
+        catchError(() => EMPTY)
+      ))
+  ));
 
-
-  loadProfiles$ = createEffect(() => {
-    return this.actions$.pipe( 
-
-      ofType(ProfileActions.loadProfiles),
-      /** An EMPTY observable only emits completion. Replace with your own observable API request */
-      concatMap(() => EMPTY as Observable<{ type: string }>)
-    );
-  });
-
-
-  constructor(private actions$: Actions) {}
-
+  constructor(
+    private actions$: Actions,
+    public readonly auth: AngularFireAuth
+  ) {}
 }

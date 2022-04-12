@@ -4,7 +4,7 @@ import * as ProfileActions from './profile.actions';
 export const profileFeatureKey = 'profile';
 
 export interface State {
-  isAdmin: boolean;
+  isAdmin?: boolean;
   uid: string;
   displayName: string;
   photoURL: string;
@@ -25,6 +25,5 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(ProfileActions.loadProfiles, state => state),
-
+  on(ProfileActions.setProfile, (state, {profile}) => ({...profile})),
 );

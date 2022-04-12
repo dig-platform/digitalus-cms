@@ -3,6 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  firebase: {
+    projectId: 'digitalus-cms',
+    appId: '1:225919349841:web:4acbf9e43f8e74f2a03470',
+    storageBucket: 'digitalus-cms.appspot.com',
+    locationId: '',
+    apiKey: 'AIzaSyCSuiixvyW0vNhcolcd_q5FzhZ2zFVl9Cg',
+    authDomain: 'digitalus-cms.firebaseapp.com',
+    messagingSenderId: '225919349841',
+    measurementId: 'G-FT4W7DTJ6T',
+  },
   production: false
 };
 
