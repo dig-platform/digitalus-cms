@@ -9,9 +9,16 @@ Creating your own state features
 You can use NGRX schematics to generate new features:
 
 ```shell
-cd /path/to/feature/module/store
+cd src/app/modules/my-feature/module/store
 ng generate @ngrx/schematics:feature myFeature --module ../my-feature.module.ts
 ```
+
+This will generate the following files (plus tests)
+
+* [my-feature.actions.ts](https://ngrx.io/guide/store/actions)
+* [my-feature.effects.ts](https://ngrx.io/guide/effects)
+* [my-feature.reducer.ts](https://ngrx.io/guide/store/reducers)
+* [my-feature.selectors.ts](https://ngrx.io/guide/store/selectors)
 
 Next import the `StoreModule` and `EffectsModule` into your module.
 
