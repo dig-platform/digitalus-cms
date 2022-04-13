@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>editor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full" [formGroup]="form">
+    <ion-item>
+      <ion-label>Page Title</ion-label>
+      <ion-input formControlName="title" placeholder="My Page" slot="end"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Permalink</ion-label>
+      <ion-input formControlName="permalink" placeholder="my/page" slot="end"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-button slot="start" [disabled]="disableSave">Save</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

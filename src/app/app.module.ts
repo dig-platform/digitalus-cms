@@ -25,6 +25,7 @@ import {AngularFireFunctionsModule} from '@angular/fire/compat/functions';
 import { PERSISTENCE } from '@angular/fire/compat/auth';
 import {ProfileModule} from './modules/profile/profile.module';
 import {firebase, firebaseui, FirebaseUIModule} from 'firebaseui-angular';
+import {PagesModule} from './modules/pages/pages.module';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'redirect',
@@ -56,7 +57,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
-    ProfileModule
+    ProfileModule,
+    PagesModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

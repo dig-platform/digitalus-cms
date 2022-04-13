@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Manage Pages</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (keyup)="goToPage($event)" placeholder="Search pages" [(ngModel)]="filter"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let page of filteredPages" [routerLink]="['edit', page.uid]">
+      <ion-icon name="document" slot="start"></ion-icon>
+      <ion-label>
+        <h3>{{page.title}}</h3>
+        <p>{{page.permalink}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-fab vertical="bottom" horizontal="end">
+  <ion-fab-button routerLink="editor/create">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
