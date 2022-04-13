@@ -62,3 +62,28 @@ Then import your module into your app module:
 })
 export class AppModule {}
 ```
+
+Now you can access your feature state in any component.
+
+```typescript
+import { Component } from '@angular/core';
+import {Store} from '@ngrx/store';
+import {selectMyFeatureState} from './modules/my-features/store/my-feature.selectors';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+})
+export class AppComponent {
+  constructor(
+    private store: Store
+  ) {
+    store.select(selectMyFeatureState).subscribe(myFeatureState => {
+      // do something awesome with your data
+    });
+  }
+}
+```
+
+Learn more about our [Architecture](./architecture.md)
