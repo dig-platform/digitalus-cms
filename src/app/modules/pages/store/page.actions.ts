@@ -2,10 +2,14 @@ import { createAction, props } from '@ngrx/store';
 import {Page} from './page.reducer';
 
 export const loadPages = createAction(
-  '[Page] Load Pages'
+  '[Page] LoadPages'
 );
 export const setPages = createAction(
-  '[Page] Set Pages'
+  '[Page] SetPages',
+  props<{pages: Page[]}>()
+);
+export const createPage = createAction(
+  '[Page] CreatePage'
 );
 export const loadPage = createAction(
   '[Page] LoadPage',
@@ -24,7 +28,8 @@ export const deletePage = createAction(
   props<{uid?: string; path?: string}>()
 );
 export const setPage = createAction(
-  '[Page] Set Page'
+  '[Page] SetPage',
+  props<{page: Page}>()
 );
 
 

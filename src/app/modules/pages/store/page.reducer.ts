@@ -34,21 +34,24 @@ export interface Page{
   plugins?: PagePlugin[];
   status: PageStatus;
   log?: PageLogEntry[];
+  createdAt?: Date;
+  createdBy?: string;
+  updatedAt?: Date;
+  updatedBy?: string;
 }
 
-export interface State {
+export interface PageState {
   active: Page;
   list: Page[];
 }
 
-export const initialState: State = {
+export const initialState: PageState = {
   active: null,
   list: []
 };
 
 export const reducer = createReducer(
   initialState,
-
-  on(PageActions.loadPages, state => state),
-
+  on(PageActions.setPages, (state, {pages}) => ({...state, list: [...pages]})),
+  on(PageActions.setPage, (state, {page}) => ({...state, active: {...page}})),
 );

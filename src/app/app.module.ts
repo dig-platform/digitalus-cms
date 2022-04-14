@@ -26,6 +26,10 @@ import { PERSISTENCE } from '@angular/fire/compat/auth';
 import {ProfileModule} from './modules/profile/profile.module';
 import {firebase, firebaseui, FirebaseUIModule} from 'firebaseui-angular';
 import {PagesModule} from './modules/pages/pages.module';
+import * as fromDig from './store/dig/dig.reducer';
+import { DigEffects } from './store/dig/dig.effects';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {MarkdownModule} from 'ngx-markdown';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'redirect',
@@ -57,8 +61,12 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot(),
+    HttpClientModule,
+    MarkdownModule.forRoot({ loader: HttpClient }),
     ProfileModule,
-    PagesModule
+    PagesModule,
+    StoreModule.forFeature(fromDig.digFeatureKey, fromDig.reducer),
+    EffectsModule.forFeature([DigEffects])
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

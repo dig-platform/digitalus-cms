@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>editor</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="start" [disabled]="disableSave" *ngIf="pageId !== 'create'" (click)="save()">
+        <ion-icon name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,8 +19,35 @@
       <ion-label>Permalink</ion-label>
       <ion-input formControlName="permalink" placeholder="my/page" slot="end"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-button slot="start" [disabled]="disableSave">Save</ion-button>
-    </ion-item>
   </ion-list>
+
+  <ion-button class="ion-margin" expand="block" *ngIf="pageId === 'create'" (click)="save()">
+    Create Page
+  </ion-button>
+
+  <ion-reorder-group [disabled]="! sortable" (ionItemReorder)="sortPlugins($event)" *ngIf="pageId !== 'create'">
+    <div class="plugin-editor-wrapper"
+         [class.sortable]="sortable"
+         *ngFor="let plugin of this.plugins">
+      <ion-reorder slot="start"></ion-reorder>
+      <app-plugin-editor
+        (pluginChange)="setPluginData(plugin, $event)"
+        [plugin]="plugin"></app-plugin-editor>
+    </div>
+  </ion-reorder-group>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar *ngIf="pageId !== 'create'">
+    <ion-buttons slot="start">
+      <ion-button (click)="sortable = ! sortable">
+        <ion-icon name="swap-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button appSelectPlugin (selected)="addPlugin($event)">
+        <ion-icon name="apps"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,19 @@
+.plugin-editor-wrapper{
+  background: var(--ion-color-light);
+  &:nth-child(odd) {
+    background: var(--ion-color-light-shade);
+  }
+  display: flex;
+  padding: 4px;
+  ion-reorder{
+    color: var(--ion-color-medium);
+  }
+  app-plugin-editor{
+    flex: 1;
+  }
+  &.sortable{
+    app-plugin-editor{
+      margin-left: 8px;
+    }
+  }
+}
