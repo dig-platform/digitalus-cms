@@ -15,3 +15,7 @@ export const selectActivePage = createSelector(
   selectPageState,
   (state: PageState) => (state.active ? {...state.active} : null)
 );
+export const selectPlugins = createSelector(
+  selectPageState,
+  (state: PageState) => (state.active ? [...state.active.plugins] : null)
+);

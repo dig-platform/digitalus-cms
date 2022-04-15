@@ -24,6 +24,7 @@ export class PluginContainerComponent implements OnInit, OnChanges {
   @Input() view: string;
 
   @Output() pluginChange: EventEmitter<any> = new EventEmitter<any>();
+  private previous: any;
 
   constructor() { }
 
@@ -34,7 +35,6 @@ export class PluginContainerComponent implements OnInit, OnChanges {
   loadComponent() {
     const viewContainerRef = this.pluginContainer.viewContainerRef;
     viewContainerRef.clear();
-
     const component = plugins[this.plugin][this.view];
 
     // todo handle errors
@@ -43,7 +43,10 @@ export class PluginContainerComponent implements OnInit, OnChanges {
     componentRef.instance.data = this.data;
     if (componentRef.instance.pluginChange) {
       componentRef.instance.pluginChange.subscribe(state => {
-        this.pluginChange.emit(state);
+        if (state !== this.previous) {
+          this.pluginChange.emit(state);
+        }
+        this.previous = {...state};
       });
     }
   }

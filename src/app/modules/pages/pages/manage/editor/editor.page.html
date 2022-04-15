@@ -28,10 +28,10 @@
   <ion-reorder-group [disabled]="! sortable" (ionItemReorder)="sortPlugins($event)" *ngIf="pageId !== 'create'">
     <div class="plugin-editor-wrapper"
          [class.sortable]="sortable"
-         *ngFor="let plugin of this.plugins">
+         *ngFor="let plugin of this.plugins; let i = index;">
       <ion-reorder slot="start"></ion-reorder>
       <app-plugin-editor
-        (pluginChange)="setPluginData(plugin, $event)"
+        (pluginChange)="setPluginData(i, $event)"
         [plugin]="plugin"></app-plugin-editor>
     </div>
   </ion-reorder-group>

@@ -13,7 +13,8 @@ export enum PageStatus{
 }
 
 export interface PagePlugin{
-  position: number;
+  uid?: string;
+  title?: string;
   plugin: string;
   data?: any;
 }
@@ -54,4 +55,12 @@ export const reducer = createReducer(
   initialState,
   on(PageActions.setPages, (state, {pages}) => ({...state, list: [...pages]})),
   on(PageActions.setPage, (state, {page}) => ({...state, active: {...page}})),
+  on(PageActions.setPlugins, (state, {plugins}) => ({...state, active: {...state.active, plugins: [...plugins]}})),
+  on(PageActions.addPlugin, (state, {plugin}) => ({...state, active: {...state.active, plugins: [...state.active.plugins, {...plugin}]}})),
+  on(PageActions.removePlugin, (state, {uid}) => (
+    {...state, active: {...state.active, plugins: [...state.active.plugins].filter(p => p.uid !== uid)}}
+  )),
+  // on(PageActions.setPluginData, (state, {uid, data}) => (
+  //   {...state, active: {...state.active, plugins: [...state.active.plugins].map(p => p.uid === uid ? {...p, data: {...data}} : {...p})}})
+  // ),
 );

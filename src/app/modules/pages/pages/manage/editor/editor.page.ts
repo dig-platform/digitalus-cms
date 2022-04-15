@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Page, PageStatus} from '../../../store/page.reducer';
 import {v4 as uuid} from 'uuid';
 import {ActivatedRoute} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {createPage, loadPage, savePage} from '../../../store/page.actions';
-import {selectActivePage} from '../../../store/page.selectors';
+import {
+  addPlugin,
+  createPage,
+  loadPage,
+  savePage,
+  setPluginData, setPlugins
+} from '../../../store/page.actions';
+import {selectActivePage, selectPlugins} from '../../../store/page.selectors';
+import {first, map, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-editor',
@@ -16,6 +23,7 @@ export class EditorPage implements OnInit {
 
   public readonly form = new FormGroup({
     uid: new FormControl(),
+    plugins: new FormControl(),
     title: new FormControl(null, [Validators.required]),
     permalink: new FormControl(null, [Validators.required])
   });
@@ -27,6 +35,7 @@ export class EditorPage implements OnInit {
   public pageId: string;
 
   public sortable: boolean;
+  private pluginsDirty: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +44,8 @@ export class EditorPage implements OnInit {
 
 
   get disableSave() {
-    return ! this.form.dirty || ! this.form.valid;
+    return false;
+    return (! this.form.dirty && ! this.pluginsDirty) || ! this.form.valid;
   }
 
   ngOnInit() {
@@ -50,6 +60,9 @@ export class EditorPage implements OnInit {
       if (page) {
         this.pageId = page.uid;
         this.form.patchValue(page);
+        if (page.plugins) {
+          this.plugins = [...page.plugins];
+        }
       } else {
         this.form.reset();
         this.pageId = 'create';
@@ -58,23 +71,32 @@ export class EditorPage implements OnInit {
   };
 
   save() {
-    this.store.dispatch(savePage({page: this.form.value}));
+    this.pluginsDirty = false;
+    const page: Page = {...this.form.value, plugins: [...this.plugins]};
+    this.store.dispatch(savePage({page}));
   }
 
   sortPlugins(ev) {
-    this.plugins = ev.detail.complete(this.plugins);
-    return true;
+    this.store.select(selectPlugins).pipe(
+      take(1),
+      map(previous => {
+        console.log(previous);
+        const plugins = ev.detail.complete(previous);
+        this.store.dispatch(setPlugins({plugins}));
+        return plugins;
+      })
+    ).subscribe(plugins => this.plugins = plugins);
   }
-
   addPlugin(ev) {
-    this.plugins.push({
+    this.store.dispatch(addPlugin({plugin: {
       title: ev.title,
       plugin: ev.key,
       data: {},
       uid: uuid()
-    });
+    }}));
   }
 
-  setPluginData(plugin, event) {
+  setPluginData(uid, data) {
+    this.store.dispatch(setPluginData({uid, data: {...data}}));
   }
 }

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {Page} from './page.reducer';
+import {Page, PagePlugin} from './page.reducer';
 
 export const loadPages = createAction(
   '[Page] LoadPages'
@@ -18,6 +18,25 @@ export const loadPage = createAction(
 export const savePage = createAction(
   '[Page] SavePage',
   props<{page: Page}>()
+);
+export const saveActivePage = createAction(
+  '[Page] SaveActivePage'
+);
+export const addPlugin = createAction(
+  '[Page] AddPlugin',
+  props<{plugin: PagePlugin}>()
+);
+export const setPluginData = createAction(
+  '[Page] SetPluginData',
+  props<{uid: string; data: any}>()
+);
+export const removePlugin = createAction(
+  '[Page] RemovePlugin',
+  props<{uid: string}>()
+);
+export const setPlugins = createAction(
+  '[Page] SetPlugins',
+  props<{plugins: PagePlugin[]}>()
 );
 export const setPageStatus = createAction(
   '[Page] SetPageStatus',

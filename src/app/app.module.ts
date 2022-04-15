@@ -70,7 +70,6 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: PERSISTENCE, useValue: 'session' },
   ],
   bootstrap: [AppComponent],
 })

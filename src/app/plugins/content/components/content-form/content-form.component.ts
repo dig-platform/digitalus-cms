@@ -20,13 +20,14 @@ export class ContentFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data) {
-      this.contentStore.setState({content: this.data.content});
-    }
+    // if (changes.data) {
+    //   this.contentStore.setState({content: this.data.content});
+    // }
   }
 
   ngOnInit() {
     this.contentStore.select(state => console.log({state}));
+    this.contentStore.setState({content: this.data.content});
   }
 
   setState(ev?) {
