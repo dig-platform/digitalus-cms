@@ -1,3 +1,84 @@
-<p>
-  images-form works!
-</p>
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <!-- todo this should be a segment control, but they are resizing it -->
+    <ion-button (click)="sortable = ! sortable">
+      <ion-icon name="swap-vertical"></ion-icon>
+    </ion-button>
+    <ion-button (click)="view = 'images'">
+      <ion-icon name="images"></ion-icon>
+    </ion-button>
+    <ion-button (click)="view = 'settings'">
+      <ion-icon name="settings"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button appUpload accept="image/png, image/jpeg, image/gif" path="images" (uploaded)="addImage($event)">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+  <ion-list *ngIf="images$ | async as images; else noImages">
+    <ion-reorder-group *ngIf="view === 'images'" [disabled]="! sortable" (ionItemReorder)="sortImages($event, images)">
+    <ion-item *ngFor="let image of images">
+      <ion-reorder slot="start"></ion-reorder>
+      <ion-thumbnail slot="start">
+        <ion-img [src]="image.src"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>{{image.title}}</h3>
+        <small>
+          <strong>Size:</strong> {{image.size | bytes}}
+          /
+          <strong>Type:</strong> {{image.type}}
+        </small>
+      </ion-label>
+    </ion-item>
+    </ion-reorder-group>
+  </ion-list>
+  <ng-template #noImages>
+    <ion-card>
+      <ion-card-content>You don't have any images yet</ion-card-content>
+    </ion-card>
+  </ng-template>
+
+<ion-list *ngIf="view === 'settings'" lines="full" [formGroup]="interfaceForm">
+  <ion-radio-group value="single" formControlName="interfaceName">
+    <ion-list-header>Interface</ion-list-header>
+    <ion-item>
+      <ion-label>Single photo</ion-label>
+      <ion-radio value="single"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Photo Grid</ion-label>
+      <ion-radio value="grid"></ion-radio>
+    </ion-item>
+    <ion-list *ngIf="interfaceForm.value.interfaceName === 'grid'" lines="none" class="ion-padding-start" [formGroup]="interfaceForm.get('interfaceOptions').get('grid')">
+      <ion-item>
+        <ion-label>Columns</ion-label>
+        <ion-input type="number" slot="end" placeholder="1" formControlName="cols"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Padding</ion-label>
+        <ion-checkbox formControlName="padding"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <ion-label>Slideshow</ion-label>
+      <ion-radio value="slideshow"></ion-radio>
+    </ion-item>
+    <ion-list *ngIf="interfaceForm.value.interfaceName === 'slideshow'" class="ion-padding-start"  [formGroup]="interfaceForm.get('interfaceOptions').get('slideshow')">
+      <ion-item>
+        <ion-label>Slider delay</ion-label>
+        <ion-input slot="end" placeholder="1" formControlName="speed"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Show scrollbar</ion-label>
+        <ion-checkbox formControlName="scrollbar"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Show pager</ion-label>
+        <ion-checkbox formControlName="pager"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+  </ion-radio-group>
+</ion-list>

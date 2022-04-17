@@ -15,7 +15,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PluginEditorComponent implements OnInit, AfterViewInit {
-  @Input() view = 'form';
+  @Input() view = 'view';
   @Input() plugin: any;
   @Output() pluginChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -28,6 +28,7 @@ export class PluginEditorComponent implements OnInit, AfterViewInit {
 
   handleChange(ev) {
     if (this.loaded) {
+      this.plugin = {...this.plugin, data: {...ev}};
       this.pluginChange.emit(ev);
     }
   }

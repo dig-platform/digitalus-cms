@@ -2,11 +2,11 @@
   <ion-toolbar>
     <ion-label>{{plugin.title}}</ion-label>
     <ion-segment slot="end" [(ngModel)]="view">
-      <ion-segment-button value="form">
-        <ion-icon name="pencil"></ion-icon>
-      </ion-segment-button>
       <ion-segment-button value="view">
         <ion-icon name="browsers-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="form">
+        <ion-icon name="pencil"></ion-icon>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

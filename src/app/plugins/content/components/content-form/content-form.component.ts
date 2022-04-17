@@ -12,21 +12,14 @@ export interface ContentData {
   styleUrls: ['./content-form.component.scss'],
   providers: [ContentStore]
 })
-export class ContentFormComponent implements OnInit, OnChanges {
+export class ContentFormComponent implements OnInit {
   @Input() data: ContentData;
   @Output() pluginChange = this.contentStore.select(state => ({...state}));
 
   constructor(private readonly contentStore: ContentStore) {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // if (changes.data) {
-    //   this.contentStore.setState({content: this.data.content});
-    // }
-  }
-
   ngOnInit() {
-    this.contentStore.select(state => console.log({state}));
     this.contentStore.setState({content: this.data.content});
   }
 

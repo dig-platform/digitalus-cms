@@ -10,6 +10,8 @@ import { EditorPage } from './editor.page';
 import {PluginContainerModule} from '../../../../../lib/components/plugin-container/plugin-container.module';
 import {PluginEditorModule} from '../../../../../lib/components/plugin-editor/plugin-editor.module';
 import {SelectPluginModule} from '../../../../../lib/directives/select-plugin/select-plugin.module';
+import {UploadModule} from '../../../../../lib/directives/upload/upload.module';
+
 
 @NgModule({
   imports: [
@@ -22,6 +24,7 @@ import {SelectPluginModule} from '../../../../../lib/directives/select-plugin/se
     PluginContainerModule,
     PluginEditorModule,
     SelectPluginModule,
+    UploadModule
   ],
   declarations: [EditorPage]
 })

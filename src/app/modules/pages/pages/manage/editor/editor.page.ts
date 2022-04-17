@@ -7,8 +7,8 @@ import {Store} from '@ngrx/store';
 import {
   addPlugin,
   createPage,
-  loadPage,
-  savePage,
+  loadPage, saveActivePage,
+  savePage, setPage,
   setPluginData, setPlugins
 } from '../../../store/page.actions';
 import {selectActivePage, selectPlugins} from '../../../store/page.selectors';
@@ -55,7 +55,7 @@ export class EditorPage implements OnInit {
         this.store.dispatch(loadPage({uid: pageId}));
       }
     });
-    this.store.select(selectActivePage).subscribe(page => {
+    this.store.select(selectActivePage).pipe(first(p => !! p?.uid)).subscribe(page => {
       this.page = page;
       if (page) {
         this.pageId = page.uid;
@@ -72,15 +72,17 @@ export class EditorPage implements OnInit {
 
   save() {
     this.pluginsDirty = false;
-    const page: Page = {...this.form.value, plugins: [...this.plugins]};
-    this.store.dispatch(savePage({page}));
+    const page = {...this.form.value};
+    delete page.plugins;
+    this.store.dispatch(setPage({page}));
+    this.store.dispatch(saveActivePage());
   }
 
   sortPlugins(ev) {
+    // todo child list sort events are bubbling up to here
     this.store.select(selectPlugins).pipe(
       take(1),
       map(previous => {
-        console.log(previous);
         const plugins = ev.detail.complete(previous);
         this.store.dispatch(setPlugins({plugins}));
         return plugins;
@@ -94,6 +96,7 @@ export class EditorPage implements OnInit {
       data: {},
       uid: uuid()
     }}));
+    this.store.select(selectPlugins).pipe(first()).subscribe(p => this.plugins = p);
   }
 
   setPluginData(uid, data) {
