@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PluginContainerComponent } from './plugin-container.component';
+import { ImagesPluginComponent } from './images-plugin.component';
 
-describe('PluginContainerComponent', () => {
-  let component: PluginContainerComponent;
-  let fixture: ComponentFixture<PluginContainerComponent>;
+describe('ImagesPluginComponent', () => {
+  let component: ImagesPluginComponent;
+  let fixture: ComponentFixture<ImagesPluginComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PluginContainerComponent ],
+      declarations: [ ImagesPluginComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PluginContainerComponent);
+    fixture = TestBed.createComponent(ImagesPluginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

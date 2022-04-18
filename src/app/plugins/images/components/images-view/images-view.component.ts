@@ -42,7 +42,6 @@ export class ImagesViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
 }

@@ -24,9 +24,17 @@ export class PageEffects {
 
   loadPage$ = createEffect(() => this.actions$.pipe(
     ofType(PageActions.loadPage),
-    switchMap(action => this.afs.collection<Page>('pages').doc(action.uid).valueChanges().pipe(
-      map(page => PageActions.setPage({page}))
-    ))
+    switchMap(({uid, path}) => {
+      if (path) {
+        return this.afs.collection<Page>('pages', ref => ref.where('permalink', '==', path)).valueChanges().pipe(
+          map(pages => PageActions.setPage({page: pages[0]}))
+        );
+      } else if (uid) {
+        return this.afs.collection<Page>('pages').doc(uid).valueChanges().pipe(
+          map(page => PageActions.setPage({page}))
+        );
+      }
+    })
   ));
 
   savePage$ = createEffect(() => this.actions$.pipe(

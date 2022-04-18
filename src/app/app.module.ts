@@ -30,6 +30,8 @@ import * as fromDig from './store/dig/dig.reducer';
 import { DigEffects } from './store/dig/dig.effects';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MarkdownModule} from 'ngx-markdown';
+import {AppPluginsModule} from './app-plugins.module';
+import {DigPluginModule} from './lib/dig';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
   signInFlow: 'redirect',
@@ -48,6 +50,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    AppPluginsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),
@@ -65,6 +68,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     MarkdownModule.forRoot({ loader: HttpClient }),
     ProfileModule,
     PagesModule,
+    DigPluginModule,
     StoreModule.forFeature(fromDig.digFeatureKey, fromDig.reducer),
     EffectsModule.forFeature([DigEffects])
   ],

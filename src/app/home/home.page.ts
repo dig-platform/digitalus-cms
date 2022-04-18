@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {DigPluginService} from '../lib/dig/modules/dig-plugin/dig-plugin.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private plugins: DigPluginService) {
+    console.log(plugins.find('content'));
+  }
 
 }

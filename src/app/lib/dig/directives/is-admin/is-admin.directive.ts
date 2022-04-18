@@ -6,7 +6,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import {Store} from '@ngrx/store';
-import {AppState} from '../../../store/app';
+import {AppState} from '../../../../store/app';
 import {Subscription} from 'rxjs';
 import {first} from 'rxjs/operators';
 

@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { ReadPageRoutingModule } from './read-routing.module';
 
 import { ReadPage } from './read.page';
+import {MarkdownModule} from 'ngx-markdown';
+import {DigPluginModule} from '../../../../lib/dig';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ReadPageRoutingModule
+    ReadPageRoutingModule,
+    DigPluginModule,
+    MarkdownModule
   ],
   declarations: [ReadPage]
 })

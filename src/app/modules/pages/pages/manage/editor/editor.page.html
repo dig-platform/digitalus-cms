@@ -30,9 +30,9 @@
          [class.sortable]="sortable"
          *ngFor="let plugin of this.plugins; let i = index;">
       <ion-reorder slot="start"></ion-reorder>
-      <app-plugin-editor
+      <app-dig-plugin-editor
         (pluginChange)="setPluginData(plugin.uid, $event)"
-        [plugin]="plugin"></app-plugin-editor>
+        [plugin]="plugin"></app-dig-plugin-editor>
     </div>
   </ion-reorder-group>
 </ion-content>

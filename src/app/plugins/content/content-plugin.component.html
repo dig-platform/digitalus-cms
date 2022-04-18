@@ -1,0 +1,11 @@
+<div class="plugin-wrapper" [ngSwitch]="view">
+  <div class="plugin-view" *ngSwitchCase="'view'">
+    view!!!
+    <markdown [data]="data.content">{{data.content}}</markdown>
+  </div>
+  <div class="plugin-form" *ngSwitchCase="'form'">
+
+  </div>
+</div>
+
+hello

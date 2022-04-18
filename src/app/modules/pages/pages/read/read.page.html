@@ -1,9 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>read</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div *ngIf="page$ | async as page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{page.title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
-
-</ion-content>
+  <ion-content fullscreen>
+    <section *ngFor="let plugin of page.plugins">
+      <app-dig-plugin
+        [plugin]="plugin.plugin"
+        view="view"
+        [data]="plugin.data"></app-dig-plugin>
+    </section>
+  </ion-content>
+</div>

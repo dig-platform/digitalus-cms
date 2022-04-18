@@ -1,0 +1,20 @@
+<ion-card class="plugin ion-no-margin">
+  <ion-toolbar>
+    <ion-label>{{plugin.title}}</ion-label>
+    <ion-segment slot="end" [(ngModel)]="view">
+      <ion-segment-button value="view">
+        <ion-icon name="browsers-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="form">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <div class="plugin-wrapper ion-margin">
+    <app-dig-plugin
+      [plugin]="plugin.plugin"
+      (pluginChange)="handleChange($event)"
+      [view]="view"
+      [data]="plugin.data"></app-dig-plugin>
+  </div>
+</ion-card>

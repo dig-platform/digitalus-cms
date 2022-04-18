@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, Output} from '@angular/core';
-import {Image, ImagesState, ImagesStore} from '../../images.store';
+import {Image, ImagesState, ImagesStore} from '../images.store';
 import {Observable} from 'rxjs';
 import {v4 as uuid} from 'uuid';
 import {FormControl, FormGroup} from '@angular/forms';

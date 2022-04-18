@@ -1,14 +1,13 @@
-import {ImagesFormComponent} from './images/components/images-form/images-form.component';
-import {ImagesViewComponent} from './images/components/images-view/images-view.component';
-import {ContentFormComponent} from './content/components/content-form/content-form.component';
-import {ContentViewComponent} from './content/components/content-view/content-view.component';
+export type DigLoader = () => Promise<any>;
 
 export interface DigPlugin {
   key?: string;
   title: string;
   icon: string;
-  form: any;
-  view: any;
+  views: {
+    form?: DigLoader;
+    render?: DigLoader;
+  };
 }
 export interface DigPluginMap {
   [key: string]: DigPlugin;
@@ -20,15 +19,17 @@ export const plugins: DigPluginMap = {
   content: {
     title: 'Content',
     icon: 'document-text',
-    form: ContentFormComponent,
-    view: ContentViewComponent
+    views: {
+      form: () => import('src/app/plugins/content/components/content-form/content-form.component'),
+      render: () => import('src/app/plugins/content/components/content-form/content-form.component'),
+    }
   },
-  images: {
-    title: 'Images',
-    icon: 'images',
-    form: ImagesFormComponent,
-    view: ImagesViewComponent
-  }
+  // images: {
+  //   title: 'Images',
+  //   icon: 'images',
+  //   form: () => import('src/app/plugins/images/images-plugin.component'),
+  //   form: () => import('src/app/plugins/images/images-plugin.component')
+  // },
 };
 
 export const pluginArray: DigPlugin[] = Object.keys(plugins).map(key => ({...plugins[key], key}));

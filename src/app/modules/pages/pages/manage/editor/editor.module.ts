@@ -7,10 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { EditorPageRoutingModule } from './editor-routing.module';
 
 import { EditorPage } from './editor.page';
-import {PluginContainerModule} from '../../../../../lib/components/plugin-container/plugin-container.module';
-import {PluginEditorModule} from '../../../../../lib/components/plugin-editor/plugin-editor.module';
-import {SelectPluginModule} from '../../../../../lib/directives/select-plugin/select-plugin.module';
-import {UploadModule} from '../../../../../lib/directives/upload/upload.module';
+import {UploadModule} from '../../../../../lib/dig/directives/upload/upload.module';
+import {DigPluginModule} from '../../../../../lib/dig';
 
 
 @NgModule({
@@ -20,10 +18,7 @@ import {UploadModule} from '../../../../../lib/directives/upload/upload.module';
     ReactiveFormsModule,
     IonicModule,
     EditorPageRoutingModule,
-    SelectPluginModule,
-    PluginContainerModule,
-    PluginEditorModule,
-    SelectPluginModule,
+    DigPluginModule,
     UploadModule
   ],
   declarations: [EditorPage]
