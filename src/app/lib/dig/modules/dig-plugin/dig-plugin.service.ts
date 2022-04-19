@@ -13,29 +13,31 @@ export class DigPluginConfig {
 })
 export class DigPluginService {
   private digPlugins: Observable<DigPlugins>;
+  private pluginConfig: DigPluginConfig;
 
   constructor(@Optional() config: DigPluginConfig, private store: Store) {
     if (config) {
-      store.dispatch(setPlugins({plugins: config.plugins}));
+      store.dispatch(setPlugins({plugins: config.plugins.map(p => {
+        const plugin = {...p};
+        delete plugin.load;
+        return plugin;
+      })}));
+      this.pluginConfig = {...config};
     }
-    this.digPlugins = this.store.select(selectPlugins);
   }
 
-  find(key: string): Observable<DigPlugin> {
-    return this.digPlugins.pipe(
-      map(plugins => plugins.find(p => p.key === key))
-    );
+  find(key: string): DigPlugin {
+    return this.pluginConfig.plugins.find(p => p.key === key);
   }
 
-  async findAsync(key: string): Promise<DigPlugin> {
-    return await this.find(key).pipe(first(p => !! p)).toPromise();
+  loadModule(key: string) {
+    return this.find(key)?.load();
   }
 
   // loads a plugin into the view
   // todo type promise
   async load(viewContainerRef: ViewContainerRef, key: string, view: string, data: any = {}): Promise<any> {
-    const plugin: any = await this.findAsync(key);
-    const pluginModule = await plugin.load();
+    const pluginModule = await this.loadModule(key);
     const component = pluginModule.components[view];
     viewContainerRef.clear();
     const componentRef: {instance: any} = viewContainerRef.createComponent(component);
